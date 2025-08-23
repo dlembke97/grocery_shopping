@@ -1,1 +1,131 @@
-{}
+{
+  "1": [
+    "baby food",
+    "baby needs",
+    "diapers",
+    "formula"
+  ],
+  "2": [
+    "bath & facial tissue",
+    "napkins",
+    "paper towels",
+    "wet napkins"
+  ],
+  "3": [
+    "foil / plastic wrap",
+    "food bags",
+    "plates & cups",
+    "trash & lawn bags"
+  ],
+  "4": [
+    "condiments",
+    "jam / jelly / honey",
+    "peanut butter",
+    "salad dressing"
+  ],
+  "7": [
+    "cereal",
+    "granola bars"
+  ],
+  "8": [
+    "cereal",
+    "fruit snacks",
+    "oatmeal",
+    "poptarts"
+  ],
+  "9": [
+    "canned veggies",
+    "institutional foods",
+    "pizza mix & sauce",
+    "rice"
+  ],
+  "10": [
+    "boxed dinners",
+    "instant potatoes",
+    "pasta noodles",
+    "pasta sauce"
+  ],
+  "5": [
+    "cookies & crackers",
+    "peanuts & nuts",
+    "popcorn"
+  ],
+  "6": [
+    "applesauce",
+    "canned fruit",
+    "juices"
+  ],
+  "11": [
+    "canned meats",
+    "canned seafood",
+    "gravy / gravy mix",
+    "soups"
+  ],
+  "12": [
+    "asian foods",
+    "ethnic foods",
+    "kosher foods",
+    "ramen noodles"
+  ],
+  "13": [
+    "ethnic foods",
+    "mexican foods",
+    "salsa",
+    "taco seasoning"
+  ],
+  "14": [
+    "baking needs",
+    "cake mix / pie filling",
+    "muffin mix",
+    "pudding / jell-o"
+  ],
+  "15": [
+    "baking needs",
+    "housewares",
+    "spices",
+    "sweetener & sugar"
+  ],
+  "16": [
+    "coffee & supplies",
+    "hot chocolate",
+    "tea"
+  ],
+  "19": [
+    "cat food",
+    "pet accessories",
+    "pet toys"
+  ],
+  "20": [
+    "dog food",
+    "dog treats",
+    "pet accessories",
+    "pet toys"
+  ],
+  "21": [
+    "natural foods",
+    "organic foods",
+    "rice cakes"
+  ],
+  "22": [
+    "natural foods",
+    "organic foods",
+    "soy milk"
+  ],
+  "17": [
+    "brooms & mops",
+    "candles",
+    "cleaning supplies",
+    "light bulbs"
+  ],
+  "18": [
+    "dish soap",
+    "laundry supplies",
+    "sewing supplies"
+  ],
+  "23": [
+    "gluten free foods",
+    "natural foods",
+    "organic foods",
+    "vegetarian foods"
+  ]
+}

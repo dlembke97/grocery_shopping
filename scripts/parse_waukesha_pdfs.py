@@ -30,32 +30,36 @@ DEPARTMENT_HINTS = [
 
 
 def extract_shopping_list(pdf_path: pathlib.Path) -> dict:
-    """Return {'1': [...], '2': [...], 'Produce': [...], ...}"""
-    out = {}
+    """Extract aisle -> keyword mapping from the printable shopping list PDF.
+
+    The Waukesha PDF uses multi-column tables which don't extract cleanly as
+    plain text.  ``pdfplumber`` is able to recover the table structure, so we
+    iterate through all tables on the page and harvest the "Aisle N" cells and
+    their corresponding bullet items.
+    """
+    out: dict[str, list[str]] = {}
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
-            text = page.extract_text() or ""
-            lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
-            i = 0
-            current_aisle = None
-            while i < len(lines):
-                m = AISLE_HEADER_RE.match(lines[i])
-                if m:
-                    current_aisle = m.group(1)
-                    out.setdefault(current_aisle, [])
-                    i += 1
-                    # collect bullets until next "Aisle" header
-                    while i < len(lines) and not AISLE_HEADER_RE.match(lines[i]):
-                        b = BULLET_RE.match(lines[i])
-                        if b:
-                            label = b.group(1)
-                            label = re.sub(
-                                r"\s*/\s*", " / ", label
-                            )  # normalize slashes a bit
-                            out[current_aisle].append(label.lower())
-                        i += 1
-                    continue
-                i += 1
+            for table in page.extract_tables():
+                for row in table:
+                    for idx, cell in enumerate(row):
+                        if not cell or "aisle" not in cell.lower():
+                            continue
+                        m = re.search(r"aisle\s*(\d+)", cell, re.I)
+                        if not m:
+                            continue
+                        aisle = m.group(1)
+                        items_cell = row[idx + 1] if idx + 1 < len(row) else ""
+                        items: list[str] = []
+                        for line in (items_cell or "").splitlines():
+                            line = line.strip()
+                            b = BULLET_RE.match(line)
+                            if b:
+                                label = re.sub(r"\s*/\s*", " / ", b.group(1))
+                                items.append(label.lower())
+                        if items:
+                            out.setdefault(aisle, []).extend(items)
+
     for k in list(out.keys()):
         out[k] = sorted(set(out[k]), key=str)
     return out
