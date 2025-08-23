@@ -1,0 +1,14 @@
+{
+  "entrance": "front",
+  "route_order": [
+    "Produce",
+    "Bakery",
+    "Health & Beauty",
+    "Liquor",
+    "Meat",
+    "Seafood",
+    "Frozen",
+    "Dairy"
+  ],
+  "coords": {}
+}
