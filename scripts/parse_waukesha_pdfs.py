@@ -8,9 +8,6 @@ DATA.mkdir(parents=True, exist_ok=True)
 # ---- Update this name to the actual downloaded filename in raw_pdfs/ ----
 STORE_PDF = ROOT / "raw_pdfs" / "woodmans-waukesha-store-map-13.pdf"  # map p1, directory p2
 
-AISLE_HEADER_RE = re.compile(r"^\s*Aisle\s+(\d+)\s*$", re.I)
-BULLET_RE = re.compile(r"^\s*[-•]\s*(.+?)\s*$")
-
 DEPARTMENT_HINTS = [
     "Produce",
     "Bakery",
@@ -25,35 +22,33 @@ DEPARTMENT_HINTS = [
 
 
 def extract_aisle_directory(pdf_path: pathlib.Path) -> dict:
-    """Parse the store PDF's directory page and return {'1': [...], 'Produce': [...], ...}."""
-    out = {}
+    """Parse page 2 directory into {"1": ["item", ...], "MEAT": [...], ...}."""
+    out: dict[str, list[str]] = {}
     with pdfplumber.open(pdf_path) as pdf:
-        # second page contains the directory mapping items to aisles
-        for page in pdf.pages[1:]:
-            text = page.extract_text() or ""
-            lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
-            i = 0
-            current_aisle = None
-            while i < len(lines):
-                m = AISLE_HEADER_RE.match(lines[i])
-                if m:
-                    current_aisle = m.group(1)
-                    out.setdefault(current_aisle, [])
-                    i += 1
-                    # collect bullets until next "Aisle" header
-                    while i < len(lines) and not AISLE_HEADER_RE.match(lines[i]):
-                        b = BULLET_RE.match(lines[i])
-                        if b:
-                            label = b.group(1)
-                            label = re.sub(
-                                r"\s*/\s*", " / ", label
-                            )  # normalize slashes a bit
-                            out[current_aisle].append(label.lower())
-                        i += 1
-                    continue
-                i += 1
+        if len(pdf.pages) < 2:
+            return out
+        page = pdf.pages[1]
+        words = page.extract_words(use_text_flow=True)
+        current: list[str] = []
+        skip = {"open", "hours", "days", "week", "welcome", "waukesha", "to", "store", "directory"}
+        for w in words:
+            token = w["text"]
+            low = token.lower()
+            if low in skip:
+                continue
+            if re.search(r"\d", token) and not re.fullmatch(r"[0-9A-Z,]+", token):
+                continue
+            if re.fullmatch(r"[0-9A-Z,]+", token):
+                item = " ".join(current).strip()
+                if item:
+                    for aisle in token.split(","):
+                        aisle = aisle.strip()
+                        out.setdefault(aisle, []).append(item.lower())
+                current = []
+            else:
+                current.append(token)
     for k in list(out.keys()):
-        out[k] = sorted(set(out[k]), key=str)
+        out[k] = sorted(set(out[k]))
     return out
 
 

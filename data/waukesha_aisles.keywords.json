@@ -1,1 +1,392 @@
-{}
+{
+  "17": [
+    "air fresheners",
+    "ammonia",
+    "brooms & mops",
+    "candles",
+    "cleaning supplies",
+    "drain openers",
+    "floor cleaners & wax",
+    "furniture polish",
+    "light bulbs",
+    "sponges",
+    "toilet cleaners",
+    "vacuum cleaner bags",
+    "window cleaner"
+  ],
+  "14": [
+    "baking needs",
+    "bread machine mixes",
+    "cake mixes",
+    "chocolate chips",
+    "chocolate-baking",
+    "cocoa-baking",
+    "foil pans",
+    "frosting",
+    "fruit-dried",
+    "jell-o",
+    "marshmallows",
+    "muffin mixes",
+    "nuts, baking",
+    "pie filling",
+    "puddings",
+    "raisins"
+  ],
+  "2": [
+    "facial tissue",
+    "napkins",
+    "paper towels",
+    "toilet tissue",
+    "wet napkins"
+  ],
+  "4": [
+    "barbeque sauce",
+    "croutons-salad",
+    "honey",
+    "jam & jelly",
+    "ketchup",
+    "mayonnaise",
+    "mustard",
+    "olives",
+    "peanut butter",
+    "pickles",
+    "salad dressing",
+    "vinegar"
+  ],
+  "15": [
+    "baking needs",
+    "baking powder",
+    "baking soda",
+    "canning supplies",
+    "cheese cloth",
+    "cinnamon sticks",
+    "cooking oil",
+    "corn starch",
+    "flour",
+    "housewares",
+    "olive oil",
+    "pancake mixes",
+    "shortening",
+    "spices",
+    "sterno",
+    "sugar",
+    "sweeteners",
+    "syrup - pancake"
+  ],
+  "3": [
+    "aluminum foil",
+    "food bags",
+    "food containers",
+    "freezer paper",
+    "garbage bags",
+    "lawn bags",
+    "plastic wrap",
+    "plates & cups",
+    "straws",
+    "toothpicks",
+    "trash bags"
+  ],
+  "H": [
+    "feminine hygiene"
+  ],
+  "SODA": [
+    "crystal light",
+    "drink mixes",
+    "gatorade",
+    "kool-aid",
+    "soda-bottled",
+    "soda-canned",
+    "tang",
+    "water-bottled"
+  ],
+  "K": [
+    "antacids",
+    "bengay",
+    "cotton swabs",
+    "ensure",
+    "first aid"
+  ],
+  "12": [
+    "asian foods",
+    "coconut milk",
+    "ethnic foods",
+    "kosher foods",
+    "ramen noodles"
+  ],
+  "26": [
+    "bread dough-frozen",
+    "breakfasts-frozen",
+    "chocolate syrup",
+    "cool whip",
+    "desserts-frozen",
+    "fruit-frozen",
+    "ice",
+    "ice cream",
+    "ice cream toppings",
+    "juice-frozen",
+    "pie shells-frozen",
+    "pies-frozen",
+    "potatoes-frozen"
+  ],
+  "T": [
+    "envelopes",
+    "paper-stationary",
+    "pens & pencils",
+    "school supplies",
+    "stationery",
+    "tape"
+  ],
+  "10": [
+    "bread crumbs",
+    "corn flake crumbs",
+    "cracker crumbs",
+    "fish coating",
+    "hamburger helper",
+    "macaroni & cheese",
+    "noodles",
+    "pasta",
+    "pizza mixes",
+    "potatoes-instant",
+    "spaghetti sauce",
+    "spaghetti-dry",
+    "stuffing"
+  ],
+  "18": [
+    "automatic dish soap",
+    "bleach",
+    "dish soap",
+    "dryer sheets",
+    "fabric softeners",
+    "laundry detergent",
+    "laundry supplies",
+    "rit dye",
+    "scrub pads",
+    "sewing"
+  ],
+  "6": [
+    "apple cider",
+    "applesauce",
+    "cranberry juice",
+    "cranberry sauce",
+    "fruit-canned",
+    "juices",
+    "mandarin oranges",
+    "marachino cherries",
+    "real lemon"
+  ],
+  "25": [
+    "fish-frozen",
+    "juice-frozen",
+    "pizza-frozen",
+    "sandwiches-frozen",
+    "seafood-frozen"
+  ],
+  "MEAT": [
+    "fish-frozen",
+    "seafood-frozen"
+  ],
+  "9": [
+    "baked beans",
+    "barley",
+    "beans, canned & dry",
+    "institutional foods",
+    "onion rings-canned",
+    "pizza sauce",
+    "pork & beans",
+    "rice",
+    "tomato sauces & paste",
+    "tomatoes-canned",
+    "vegetables-canned"
+  ],
+  "Z": [
+    "bug spray",
+    "gloves",
+    "string",
+    "twine"
+  ],
+  "16": [
+    "coffee",
+    "coffee creamers-dry",
+    "coffee filters",
+    "coffee pot cleaners",
+    "hot cocoa",
+    "instant coffee",
+    "tea"
+  ],
+  "M": [
+    "incontinent pads",
+    "lip balms",
+    "lotions",
+    "sun tan lotion",
+    "trial sizes"
+  ],
+  "23": [
+    "gluten free foods",
+    "natural food",
+    "pizza-frozen",
+    "vegetarian foods"
+  ],
+  "24": [
+    "frozen dinners",
+    "juice-frozen",
+    "pizza-frozen",
+    "vegetables-frozen"
+  ],
+  "1": [
+    "baby food",
+    "baby needs",
+    "disposable diapers",
+    "formula",
+    "infant cereal",
+    "thermometers"
+  ],
+  "Y": [
+    "charcoal",
+    "furnace filters",
+    "lighter fluid",
+    "logs",
+    "matches"
+  ],
+  "5": [
+    "cookies",
+    "crackers",
+    "peanuts & snack nuts",
+    "popcorn"
+  ],
+  "I": [
+    "batteries cough medicines",
+    "children\u2019s medicines",
+    "cold medicines",
+    "cough drops",
+    "foot care",
+    "nylons",
+    "pain relievers",
+    "shoe laces"
+  ],
+  "8": [
+    "breakfasts-instant",
+    "cereal",
+    "fruit snacks",
+    "instant hot cereal",
+    "oatmeal",
+    "pop tarts"
+  ],
+  "13": [
+    "ethnic foods",
+    "mexican foods",
+    "salsa",
+    "taco seasonings"
+  ],
+  "U": [
+    "magazines"
+  ],
+  "N": [
+    "make up"
+  ],
+  "11": [
+    "bouillon cubes",
+    "broth canned",
+    "canned meats",
+    "chili-canned",
+    "gravy & gravy mixes",
+    "manwich",
+    "oysters-canned",
+    "salmon - canned",
+    "sardines",
+    "soups",
+    "spaghetti o\u2019s",
+    "spaghetti-canned",
+    "tuna - canned"
+  ],
+  "L": [
+    "a bath products",
+    "bath soap"
+  ],
+  "R": [
+    "deodorant",
+    "eye care",
+    "razors",
+    "shave cream"
+  ],
+  "21": [
+    "natural food",
+    "rice cakes"
+  ],
+  "S": [
+    "dental floss",
+    "denture care",
+    "mouthwash",
+    "toothpaste"
+  ],
+  "X": [
+    "bird seed",
+    "pet toys"
+  ],
+  "22": [
+    "natural food",
+    "rice milk",
+    "soy milk"
+  ],
+  "E": [
+    "greeting cards"
+  ],
+  "F": [
+    "greeting cards"
+  ],
+  "G": [
+    "greeting cards"
+  ],
+  "O": [
+    "hair coloring",
+    "natural health care"
+  ],
+  "P": [
+    "ethnic hair care",
+    "hairspray",
+    "shampoo"
+  ],
+  "Q": [
+    "hairspray",
+    "shampoo"
+  ],
+  "J": [
+    "diet supplements",
+    "slimfast",
+    "vitamins",
+    "weightloss products"
+  ],
+  "20": [
+    "dog food-canned",
+    "dog food-dry",
+    "dog treats",
+    "pet accessories",
+    "pet toys"
+  ],
+  "A": [
+    "candy"
+  ],
+  "B": [
+    "candy"
+  ],
+  "C": [
+    "candy"
+  ],
+  "D": [
+    "candy"
+  ],
+  "W": [
+    "cat litter",
+    "pet toys"
+  ],
+  "19": [
+    "cat food",
+    "pet accessories",
+    "pet toys"
+  ],
+  "DAIRY": [
+    "egg beaters"
+  ],
+  "7": [
+    "cereal"
+  ]
+}
