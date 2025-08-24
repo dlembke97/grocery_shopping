@@ -5,16 +5,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 DATA.mkdir(parents=True, exist_ok=True)
 
-# ---- Update these names to the actual downloaded filenames in raw_pdfs/ ----
-SHOPPING_LIST_PDF = (
-    ROOT / "raw_pdfs" / "woodmans-waukesha-shopping-list-13.pdf"
-)  # Waukesha "Printable Shopping List"
-STORE_MAP_PDF = (
-    ROOT / "raw_pdfs" / "woodmans-waukesha-store-map-13.pdf"
-)  # Waukesha "Store Map"
-
-AISLE_HEADER_RE = re.compile(r"^\s*Aisle\s+(\d+)\s*$", re.I)
-BULLET_RE = re.compile(r"^\s*[-•]\s*(.+?)\s*$")
+# ---- Update this name to the actual downloaded filename in raw_pdfs/ ----
+STORE_PDF = ROOT / "raw_pdfs" / "woodmans-waukesha-store-map-13.pdf"  # map p1, directory p2
 
 DEPARTMENT_HINTS = [
     "Produce",
@@ -29,48 +21,47 @@ DEPARTMENT_HINTS = [
 ]
 
 
-def extract_shopping_list(pdf_path: pathlib.Path) -> dict:
-    """Return {'1': [...], '2': [...], 'Produce': [...], ...}"""
-    out = {}
+def extract_aisle_directory(pdf_path: pathlib.Path) -> dict:
+    """Parse page 2 directory into {"1": ["item", ...], "MEAT": [...], ...}."""
+    out: dict[str, list[str]] = {}
     with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            text = page.extract_text() or ""
-            lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
-            i = 0
-            current_aisle = None
-            while i < len(lines):
-                m = AISLE_HEADER_RE.match(lines[i])
-                if m:
-                    current_aisle = m.group(1)
-                    out.setdefault(current_aisle, [])
-                    i += 1
-                    # collect bullets until next "Aisle" header
-                    while i < len(lines) and not AISLE_HEADER_RE.match(lines[i]):
-                        b = BULLET_RE.match(lines[i])
-                        if b:
-                            label = b.group(1)
-                            label = re.sub(
-                                r"\s*/\s*", " / ", label
-                            )  # normalize slashes a bit
-                            out[current_aisle].append(label.lower())
-                        i += 1
-                    continue
-                i += 1
+        if len(pdf.pages) < 2:
+            return out
+        page = pdf.pages[1]
+        words = page.extract_words(use_text_flow=True)
+        current: list[str] = []
+        skip = {"open", "hours", "days", "week", "welcome", "waukesha", "to", "store", "directory"}
+        for w in words:
+            token = w["text"]
+            low = token.lower()
+            if low in skip:
+                continue
+            if re.search(r"\d", token) and not re.fullmatch(r"[0-9A-Z,]+", token):
+                continue
+            if re.fullmatch(r"[0-9A-Z,]+", token):
+                item = " ".join(current).strip()
+                if item:
+                    for aisle in token.split(","):
+                        aisle = aisle.strip()
+                        out.setdefault(aisle, []).append(item.lower())
+                current = []
+            else:
+                current.append(token)
     for k in list(out.keys()):
-        out[k] = sorted(set(out[k]), key=str)
+        out[k] = sorted(set(out[k]))
     return out
 
 
 def extract_departments_from_map(pdf_path: pathlib.Path) -> list[str]:
-    """Grab department words from the map text. If text is limited, fall back to common ones."""
+    """Grab department words from the map (first page)."""
     depts = set()
     try:
         with pdfplumber.open(pdf_path) as pdf:
-            for page in pdf.pages:
-                text = (page.extract_text() or "").lower()
-                for hint in DEPARTMENT_HINTS:
-                    if hint.lower() in text:
-                        depts.add(hint)
+            page = pdf.pages[0]  # first page is the store map
+            text = (page.extract_text() or "").lower()
+            for hint in DEPARTMENT_HINTS:
+                if hint.lower() in text:
+                    depts.add(hint)
     except Exception:
         pass
     for hint in ["Produce", "Bakery", "Frozen", "Dairy"]:
@@ -93,12 +84,12 @@ def build_layout(aisle_dict: dict, departments: list[str]) -> dict:
 
 
 def main():
-    if not SHOPPING_LIST_PDF.exists() or not STORE_MAP_PDF.exists():
+    if not STORE_PDF.exists():
         sys.exit(
-            "Put the two PDFs in raw_pdfs/ and update filenames at the top of this script."
+            "Put the store PDF in raw_pdfs/ and update the filename at the top of this script."
         )
-    aisles = extract_shopping_list(SHOPPING_LIST_PDF)
-    departments = extract_departments_from_map(STORE_MAP_PDF)
+    aisles = extract_aisle_directory(STORE_PDF)
+    departments = extract_departments_from_map(STORE_PDF)
     layout = build_layout(aisles, departments)
 
     (DATA / "waukesha_aisles.keywords.json").write_text(json.dumps(aisles, indent=2))
