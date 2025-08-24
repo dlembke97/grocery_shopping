@@ -22,7 +22,18 @@ _NEIGHBORS = [
 
 _nav_data = None
 _nav_mask = None
-_dist_cache: Dict[Tuple[str, str], float] = {}
+_dist_cache: Dict[str, float] = {}
+
+
+def _cache_key(a: str, b: str) -> str:
+    """Create a stable cache key for a pair of stop labels.
+
+    The JSON distance cache on disk only supports string keys, so we join the
+    two stop labels with a delimiter in a sorted order. This ensures that the
+    distance from A to B uses the same key as from B to A while remaining JSON
+    serialisable.
+    """
+    return "|".join(sorted((a, b)))
 
 
 def _load() -> None:
@@ -79,7 +90,7 @@ def _astar(start: Tuple[int, int], goal: Tuple[int, int]) -> Tuple[float, List[T
 
 def shortest_distance(a_label: str, b_label: str) -> float:
     _load()
-    key = tuple(sorted([a_label, b_label]))
+    key = _cache_key(a_label, b_label)
     if key in _dist_cache:
         return _dist_cache[key]
     stops = _nav_data["stops"]
