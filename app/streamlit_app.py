@@ -8,6 +8,7 @@ st.set_page_config(page_title="Woodman's Waukesha Aisle Finder", layout="wide")
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 KEYWORDS_JSON = DATA_DIR / "waukesha_aisles.keywords.json"
 LAYOUT_JSON   = DATA_DIR / "waukesha_layout.json"
+SECTION_JSON  = DATA_DIR / "store_sections.keywords.json"
 
 @st.cache_data
 def load_data():
@@ -15,23 +16,34 @@ def load_data():
         aisles = json.load(f)
     with open(LAYOUT_JSON) as f:
         layout = json.load(f)
+    with open(SECTION_JSON) as f:
+        sections = json.load(f)
     corpus_terms, corpus_aisles = [], []
     for aisle, kws in aisles.items():
         for kw in kws:
             corpus_terms.append(kw)
             corpus_aisles.append(aisle)
-    return aisles, layout, corpus_terms, corpus_aisles
+    section_terms, section_names = [], []
+    for sec, kws in sections.items():
+        for kw in kws:
+            section_terms.append(kw)
+            section_names.append(sec)
+    return aisles, layout, corpus_terms, corpus_aisles, section_terms, section_names
 
 def normalize(s: str) -> str:
     s = s.lower().strip()
     s = re.sub(r"[^a-z0-9\s/+-]", "", s)
     return re.sub(r"\s+", " ", s)
 
-def best_match(item: str, terms, aisles):
+def best_match(item: str, terms, aisles, score_cutoff: int = 75):
+    """Return the best aisle match for ``item`` or ``None`` if below cutoff."""
     if not terms:
         return None, None, 0
     q = normalize(item)
-    match, score, idx = process.extractOne(q, terms, scorer=fuzz.WRatio)
+    result = process.extractOne(q, terms, scorer=fuzz.WRatio, score_cutoff=score_cutoff)
+    if result is None:
+        return None, None, 0
+    match, score, idx = result
     return aisles[idx], match, int(score)
 
 def order_stops(stops, layout):
@@ -71,7 +83,7 @@ def main():
         st.warning("Missing data JSONs. Put the PDFs in raw_pdfs/ and run the parser to generate them.")
         st.stop()
 
-    aisles, layout, terms, aisles_for_terms = load_data()
+    aisles, layout, terms, aisles_for_terms, section_terms, section_names = load_data()
 
     items_text = st.text_area("Paste your items (one per line):", height=220,
                               placeholder="bananas\nramen\ncake mix\ncoffee filters\nyogurt")
@@ -81,6 +93,8 @@ def main():
         rows = []
         for it in items:
             a, kw, score = best_match(it, terms, aisles_for_terms)
+            if a is None:
+                a, kw, score = best_match(it, section_terms, section_names, score_cutoff=60)
             rows.append({"Item": it, "Aisle/Area": a or "Unknown", "Matched keyword": kw or "", "Confidence": score})
 
         st.subheader("Matches")

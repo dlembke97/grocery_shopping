@@ -1,0 +1,10 @@
+{
+  "Produce": ["apple", "apples", "banana", "bananas", "cilantro", "tomato", "tomatoes", "potato", "potatoes", "onion", "onions", "lettuce", "spinach", "carrot", "carrots", "cucumber", "cucumbers", "pepper", "peppers", "broccoli", "garlic", "strawberry", "strawberries", "grape", "grapes", "avocado", "mango", "pear", "peach", "peaches", "orange", "oranges", "grapefruit", "lime", "limes", "lemon", "lemons", "watermelon", "melon"],
+  "Bakery": ["bread", "bagel", "bagels", "roll", "rolls", "cake", "cakes", "cookie", "cookies", "donut", "donuts", "muffin", "muffins", "croissant", "croissants"],
+  "Meat": ["chicken", "beef", "pork", "steak", "turkey", "sausage", "sausages", "bacon", "ham"],
+  "Deli": ["ham", "turkey", "salami", "cheese", "provolone", "swiss", "american cheese", "sandwich", "sub"],
+  "Dairy": ["milk", "cheese", "butter", "yogurt", "cream", "eggs", "egg"],
+  "Frozen": ["frozen", "ice cream", "pizza", "vegetables", "veggies", "fries", "waffles"],
+  "Liquor": ["beer", "wine", "vodka", "whiskey", "rum", "tequila"],
+  "Health & Beauty": ["shampoo", "toothpaste", "soap", "deodorant", "lotion", "cosmetics"]
+}
